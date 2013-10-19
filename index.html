@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>SpyTank Gamepad</title>
+</head>
+<body>
+    <div id="connect-notice">Connect your gamepad.</div>
+
+    <div>
+        <h2>Left-Sticky: <span id="rounded-axis-1">0</span></h2>
+    </div>
+    <div>
+        <h2>Right-Sticky: <span id="rounded-axis-3">0</span></h2>
+    </div>
+
+    <iframe id="st-controller-left" src="#http://192.168.1.100/wifi_car_control.cgi"></iframe>
+    <iframe id="st-controller-right" src="#http://192.168.1.100/wifi_car_control.cgi"></iframe>
+
+    <!-- 
+    http://192.168.1.100/wifi_car_control.cgi
+    param: 1 to 10 = speed
+    command: 
+        right wheel stop = 0
+        right wheel forward = 1
+        right wheel backward = 2
+        left wheel stop = 3
+        left wheel forward = 4
+        left wheel backward = 5
+
+    Example: http://192.168.1.100/wifi_car_control.cgi?param=10&command=1
+     -->
+
+    <script src="js/jquery.min.js"></script>
+    <script src="js/gamepad.min.js"></script>
+    <script src="js/spyTank.js"></script>
+</body>
+</html>
