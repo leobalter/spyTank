@@ -34,18 +34,18 @@ jQuery(function($) {
 
     gamepad.bind(Gamepad.Event.AXIS_CHANGED, function(e) {
         // dropping x axis movements
-        if ( e.axis === 'LEFT_STICKY_X' || e.axis === 'RIGHT_STICKY_X' ) {
+        if ( e.axis === 'LEFT_STICK_X' || e.axis === 'RIGHT_STICK_X' ) {
             return;
         }
 
         var roundedValue = Math.round( e.value * 10 ),
             speed = Math.abs( roundedValue ),
-            sticky = ( e.axis === 'LEFT_STICKY_Y' ) ? 'left' : 'right',
+            sticky = ( e.axis === 'LEFT_STICK_Y' ) ? 'left' : 'right',
             action,
             command,
             url;
     
-        if ( roundedValue < 5 ) {
+        if ( roundedValue < -5 ) {
             action = 'forward';
         } else if ( roundedValue > 5 ) {
             action = 'backward';
