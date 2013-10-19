@@ -1,9 +1,10 @@
 jQuery(function($) {
     var gamepad = new Gamepad(),
         stController = {
-            "right" : document.querySelector( '#st-controller-right' ),
-            "left"  : document.querySelector( '#st-controller-left' ),  
-        } 
+            right : document.querySelector( '#st-controller-right' ),
+            left  : document.querySelector( '#st-controller-left' ),
+            last  : Date.now()
+        }, 
         commands = {
             "right" : {
                 stop     : 0,
@@ -54,30 +55,19 @@ jQuery(function($) {
         }
 
         command = commands[ sticky ][ action ];
-        if ( command !== commands[ sticky ].last ) {
+        if ( command !== commands[ sticky ].last || Math.round(( Date.now() - stController.last ) / 1000 ) >= 3 ) {
             commands[ sticky ].last = command;
 
             url = 'http://192.168.1.100/wifi_car_control.cgi?param=' + speed + '&command=' + command;
             stController[ sticky ].src = url;
-        }
+            stController.last = Date.now();
+        } 
 
         // Data visualization
         e.gamepad.axes.forEach( function( axe, i ) {
             var rounded = Math.round( axe * 10 );
             $( '#rounded-axis-' + i ).text( rounded );
         });
-    });
-
-    gamepad.bind(Gamepad.Event.BUTTON_DOWN, function(e) {
-        $('#log-' + e.gamepad.index).append('<li>' + e.control + ' down</li>');
-    });
-    
-    gamepad.bind(Gamepad.Event.BUTTON_UP, function(e) {
-        $('#log-' + e.gamepad.index).append('<li>' + e.control + ' up</li>');
-    });
-
-    gamepad.bind(Gamepad.Event.AXIS_CHANGED, function(e) {
-        $('#log-' + e.gamepad.index).append('<li>' + e.axis + ' changed to ' + e.value + '</li>');
     });
 
     if (!gamepad.init()) {
